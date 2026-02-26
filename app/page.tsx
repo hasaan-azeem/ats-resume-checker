@@ -7,7 +7,8 @@ import {
   TrendingUp,
   Star,
   ArrowRight,
-  FileText, Sparkles
+  FileText,
+  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -91,7 +92,7 @@ export default function Home() {
 
       {/* How it works */}
       <section className="max-w-5xl mx-auto px-6 py-28">
-        <div className="text-center mb-16">
+        <div className="text-center mb-20">
           <p className="text-[#4F7EFF] text-sm font-medium uppercase tracking-widest mb-3">
             How It Works
           </p>
@@ -99,45 +100,84 @@ export default function Home() {
             Three steps to a better resume
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-          {/* Connector line */}
-          <div className="hidden md:block absolute top-12 left-1/3 right-1/3 h-px bg-linear-to-r from-[#4F7EFF] to-[#A855F7] opacity-30" />
+
+        <div className="relative flex flex-col md:flex-row items-stretch gap-4">
+          {/* Connector line behind cards */}
+          <div className="hidden md:block absolute top-1/2 left-0 right-0 h-px -translate-y-1/2 z-0">
+            <div className="mx-[10%] h-full bg-gradient-to-r from-transparent via-[#4F7EFF]/20 to-transparent" />
+          </div>
+
           {[
             {
-              icon: <Zap size={22} />,
+              icon: <Zap size={20} />,
               step: "01",
               title: "Upload Resume",
-              desc: "Drop your PDF or DOCX resume. We extract the text instantly.",
+              desc: "Drop your PDF or DOCX resume. We extract and parse the text instantly.",
+              color: "#4F7EFF",
             },
             {
-              icon: <Target size={22} />,
+              icon: <Target size={20} />,
               step: "02",
               title: "Paste Job Description",
-              desc: "Add the job posting you are applying for. The more detail, the better.",
+              desc: "Add the full job posting. The more detail you include, the more accurate your score.",
+              color: "#7C3AED",
             },
             {
-              icon: <TrendingUp size={22} />,
+              icon: <TrendingUp size={20} />,
               step: "03",
               title: "Get Your ATS Score",
-              desc: "Receive a full breakdown with actionable fixes to improve your score.",
+              desc: "Receive a full breakdown across 4 categories with specific fixes to boost your score.",
+              color: "#A855F7",
             },
           ].map((s, i) => (
-            <div
-              key={i}
-              className="glass rounded-2xl p-8 hover:border-white/15 transition-all duration-300 group"
-            >
-              <div className="flex items-start justify-between mb-6">
-                <div className="w-12 h-12 rounded-xl bg-linear-to-br from-[#4F7EFF]/20 to-[#A855F7]/20 border border-white/8 flex items-center justify-center text-[#4F7EFF] group-hover:scale-110 transition-transform">
+            <div key={i} className="relative z-10 flex-1 group">
+              {/* Step number badge floating above card */}
+              <div className="flex justify-center mb-4">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-syne font-extrabold text-white border border-white/10 shadow-[0_0_20px_rgba(79,126,255,0.2)]"
+                  style={{
+                    background: `linear-gradient(135deg, ${s.color}33, ${s.color}11)`,
+                  }}
+                >
+                  {s.step}
+                </div>
+              </div>
+
+              {/* Card */}
+              <div
+                className="h-full bg-white/[0.03] border border-white/[0.08] rounded-2xl p-7
+                     hover:border-white/20 hover:bg-white/[0.05]
+                     transition-all duration-300 cursor-default"
+              >
+                {/* Icon */}
+                <div
+                  className="w-11 h-11 rounded-xl mb-5 flex items-center justify-center
+                       border border-white/10 group-hover:scale-110 transition-transform duration-300"
+                  style={{
+                    background: `linear-gradient(135deg, ${s.color}22, ${s.color}08)`,
+                    color: s.color,
+                    boxShadow: `0 0 20px ${s.color}15`,
+                  }}
+                >
                   {s.icon}
                 </div>
-                <span className="font-syne text-5xl font-extrabold text-white/4">
-                  {s.step}
-                </span>
+
+                {/* Text */}
+                <h3 className="font-syne font-bold text-white text-lg mb-2">
+                  {s.title}
+                </h3>
+                <p className="text-white/40 text-sm leading-relaxed">
+                  {s.desc}
+                </p>
+
+                {/* Bottom accent bar */}
+                <div
+                  className="mt-6 h-px w-0 group-hover:w-full transition-all duration-500 rounded-full"
+                  style={{
+                    background: `linear-gradient(90deg, ${s.color}, transparent)`,
+                  }}
+                />
               </div>
-              <h3 className="font-syne font-bold text-white text-xl mb-3">
-                {s.title}
-              </h3>
-              <p className="text-white/40 text-sm leading-relaxed">{s.desc}</p>
             </div>
           ))}
         </div>
