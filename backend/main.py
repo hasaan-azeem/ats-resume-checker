@@ -12,19 +12,26 @@ app = FastAPI(
 # CORS so Next.js frontend can talk to this
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # update this for production
+    allow_origins=[
+        "http://localhost:3000",
+        "https://atscan.vercel.app",
+        "https://*.vercel.app",
+    ],  # update this for production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Initialize database on startup
 @app.on_event("startup")
 def on_startup():
     init_db()
 
+
 # Include routers
 app.include_router(score_router, prefix="/api")
+
 
 @app.get("/")
 def health_check():
